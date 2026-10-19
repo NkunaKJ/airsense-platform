@@ -1,0 +1,72 @@
+services:
+  db:
+    image: postgres:16
+    container_name: airsense-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./data:/data:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: airsense-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      IOT_API_KEY: ${IOT_API_KEY}
+    volumes:
+      - ./backend/models:/app/models:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  gateway:
+    build: ./iot
+    container_name: airsense-gateway
+    restart: unless-stopped
+    environment:
+      API_URL: http://backend:8000
+      IOT_API_KEY: ${IOT_API_KEY}
+      POLL_SECONDS: "300"
+    depends_on:
+      - backend
+
+  simulator:
+    build: ./iot
+    container_name: airsense-simulator
+    restart: unless-stopped
+    command: ["python", "-u", "simulator.py"]
+    environment:
+      API_URL: http://backend:8000
+      IOT_API_KEY: ${IOT_API_KEY}
+      POLL_SECONDS: "300"
+    depends_on:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:

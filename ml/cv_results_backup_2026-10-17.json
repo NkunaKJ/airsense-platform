@@ -1,0 +1,181 @@
+[
+  {
+    "city": "capetown",
+    "train_rows": 1205,
+    "test_rows": 302,
+    "train_end": "2025-11-26",
+    "test_start": "2025-11-27",
+    "models": {
+      "Baseline (tomorrow = today)": {
+        "cv_mae": 8.984125,
+        "params": {}
+      },
+      "Ridge (linear)": {
+        "cv_mae": 9.299495632068083,
+        "params": {
+          "ridge__alpha": 1000
+        }
+      },
+      "Random Forest": {
+        "cv_mae": 9.255750054581323,
+        "params": {
+          "max_depth": 4,
+          "min_samples_leaf": 10
+        }
+      },
+      "Gradient Boosting": {
+        "cv_mae": 9.274958412909431,
+        "params": {
+          "learning_rate": 0.03,
+          "max_depth": 5,
+          "max_iter": 150
+        }
+      },
+      "Neural Network (MLP)": {
+        "cv_mae": 9.716983064059537,
+        "params": {
+          "mlpregressor__alpha": 0.001,
+          "mlpregressor__hidden_layer_sizes": [
+            32,
+            16
+          ]
+        }
+      }
+    },
+    "best_model": "Random Forest"
+  },
+  {
+    "city": "durban",
+    "train_rows": 1205,
+    "test_rows": 302,
+    "train_end": "2025-11-26",
+    "test_start": "2025-11-27",
+    "models": {
+      "Baseline (tomorrow = today)": {
+        "cv_mae": 4.3461375,
+        "params": {}
+      },
+      "Ridge (linear)": {
+        "cv_mae": 4.170098418693972,
+        "params": {
+          "ridge__alpha": 100
+        }
+      },
+      "Random Forest": {
+        "cv_mae": 4.410733645144974,
+        "params": {
+          "max_depth": 4,
+          "min_samples_leaf": 10
+        }
+      },
+      "Gradient Boosting": {
+        "cv_mae": 4.477814482213768,
+        "params": {
+          "learning_rate": 0.03,
+          "max_depth": 3,
+          "max_iter": 150
+        }
+      },
+      "Neural Network (MLP)": {
+        "cv_mae": 4.1927296655133,
+        "params": {
+          "mlpregressor__alpha": 0.1,
+          "mlpregressor__hidden_layer_sizes": [
+            32,
+            16
+          ]
+        }
+      }
+    },
+    "best_model": "Ridge (linear)"
+  },
+  {
+    "city": "emalahleni",
+    "train_rows": 1205,
+    "test_rows": 302,
+    "train_end": "2025-11-26",
+    "test_start": "2025-11-27",
+    "models": {
+      "Baseline (tomorrow = today)": {
+        "cv_mae": 7.207041666666667,
+        "params": {}
+      },
+      "Ridge (linear)": {
+        "cv_mae": 6.080400518620506,
+        "params": {
+          "ridge__alpha": 100
+        }
+      },
+      "Random Forest": {
+        "cv_mae": 6.114244002592922,
+        "params": {
+          "max_depth": null,
+          "min_samples_leaf": 3
+        }
+      },
+      "Gradient Boosting": {
+        "cv_mae": 6.175049990472756,
+        "params": {
+          "learning_rate": 0.03,
+          "max_depth": 3,
+          "max_iter": 150
+        }
+      },
+      "Neural Network (MLP)": {
+        "cv_mae": 6.809166222392543,
+        "params": {
+          "mlpregressor__alpha": 1.0,
+          "mlpregressor__hidden_layer_sizes": [
+            32,
+            16
+          ]
+        }
+      }
+    },
+    "best_model": "Ridge (linear)"
+  },
+  {
+    "city": "johannesburg",
+    "train_rows": 1205,
+    "test_rows": 302,
+    "train_end": "2025-11-26",
+    "test_start": "2025-11-27",
+    "models": {
+      "Baseline (tomorrow = today)": {
+        "cv_mae": 9.857858333333333,
+        "params": {}
+      },
+      "Ridge (linear)": {
+        "cv_mae": 8.526950374735147,
+        "params": {
+          "ridge__alpha": 10
+        }
+      },
+      "Random Forest": {
+        "cv_mae": 8.631073389556772,
+        "params": {
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        }
+      },
+      "Gradient Boosting": {
+        "cv_mae": 8.665617032829605,
+        "params": {
+          "learning_rate": 0.03,
+          "max_depth": 3,
+          "max_iter": 300
+        }
+      },
+      "Neural Network (MLP)": {
+        "cv_mae": 9.153124286526056,
+        "params": {
+          "mlpregressor__alpha": 1.0,
+          "mlpregressor__hidden_layer_sizes": [
+            32
+          ]
+        }
+      }
+    },
+    "best_model": "Ridge (linear)"
+  }
+]
