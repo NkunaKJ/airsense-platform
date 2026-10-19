@@ -1,6 +1,6 @@
    # AirSense: PM2.5 Air Quality Prediction for South African Cities
 
-   AirSense predicts daily PM2.5 (fine particle pollution) for **Johannesburg, Cape Town, Durban and Emalahleni** and turns the prediction into simple health advice for groups such as people with asthma, heart or lung conditions, and runners.
+      AirSense predicts daily PM2.5 (fine particle pollution) for **Johannesburg, Cape Town, Durban and Emalahleni** and turns each prediction into clear health advice for everyone, with extra guidance for people with asthma, heart conditions or other lung conditions (such as COPD), parents of young children, and runners and outdoor workers. The advice is general guidance, not medical advice.
 
     Built as a final-year project at Tshwane University of Technology.
 
