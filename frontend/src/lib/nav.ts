@@ -5,5 +5,6 @@ export const NAV = [
   { href: "/compare", label: "Compare" },
   { href: "/sensors", label: "Sensors" },
   { href: "/analysis", label: "Analysis" },
+  { href: "/saved", label: "My forecasts" },
   { href: "/about", label: "About" },
 ];

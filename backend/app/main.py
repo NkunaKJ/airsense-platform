@@ -9,6 +9,7 @@ from app.models_api import router as models_router
 from app.eda import router as eda_router
 from app.predict import router as predict_router
 from app.advice import router as advice_router
+from app.accounts import router as accounts_router, ensure_tables
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
@@ -20,6 +21,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Create the account tables if they are missing (safe to run every time the back end starts)
+ensure_tables()
+
+app.include_router(iot_router)
+app.include_router(models_router)
+app.include_router(eda_router)
+app.include_router(predict_router)
+app.include_router(advice_router)
+app.include_router(accounts_router)
 
 
 def get_conn():
@@ -66,8 +77,3 @@ def history(city_key: str, days: int = Query(60, ge=1, le=2000)):
             for r in rows
         ],
     }
-app.include_router(iot_router)
-app.include_router(models_router)
-app.include_router(eda_router)
-app.include_router(predict_router)
-app.include_router(advice_router)

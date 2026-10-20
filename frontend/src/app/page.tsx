@@ -6,6 +6,7 @@ import BandScale from "@/components/BandScale";
 import ConditionsPicker, { type Mode } from "@/components/ConditionsPicker";
 import DriverChart from "@/components/DriverChart";
 import RecentDays from "@/components/RecentDays";
+import SaveForecast from "@/components/SaveForecast";
 import {
   BANDS,
   bandFor,
@@ -212,6 +213,7 @@ export default function PredictionPage() {
         </section>
       )}
 
+      {data && band && request && <SaveForecast key={request.id} data={data} />}
       {data && band && data.source === "day" && (
         <div className="notice notice--info">
           {data.actual_next_day !== null && data.actual_next_day !== undefined ? (

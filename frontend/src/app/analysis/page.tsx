@@ -112,7 +112,7 @@ export default function AnalysisPage() {
             </div>
             <p className="section__fine">
               &ldquo;Worst 5%&rdquo; is the level that only 1 day in 20 goes above. These are regional
-              estimates on a grid of about 40 km, not readings from a station in the city.
+              estimates on a grid of about 45 km, not readings from a station in the city.
             </p>
           </section>
 

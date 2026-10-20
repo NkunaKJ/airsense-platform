@@ -1315,3 +1315,339 @@ h3 {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
+
+/* paste this at the very bottom of globals.css */
+/* ---------- accounts and layout: top bar, left menu, log in / register forms ---------- */
+.site-header__inner {
+  max-width: 72rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.frame {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+.frame--menu {
+  display: grid;
+  grid-template-columns: 11.5rem minmax(0, 1fr);
+  align-items: start;
+}
+.frame .page {
+  max-width: none;
+  margin: 0;
+}
+.side-nav {
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 2rem 0 0 1.25rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--line);
+}
+.side-nav a {
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.4rem;
+  border-left: 3px solid transparent;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.side-nav a:hover {
+  color: var(--ink);
+  background: var(--haze);
+}
+.side-nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--haze);
+  border-left-color: var(--dusk);
+}
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+}
+.account a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0.2rem 0;
+  border-bottom: 2px solid transparent;
+}
+.account a:hover {
+  color: var(--ink);
+}
+.account a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom-color: var(--dusk);
+}
+.account__who {
+  color: var(--ink);
+  font-weight: 600;
+}
+.account__out {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.35rem 0.95rem;
+  border: 1px solid var(--ink-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+}
+.account__out:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.auth {
+  display: grid;
+  gap: 1rem;
+  max-width: 24rem;
+  margin-top: 1.5rem;
+}
+.auth .field {
+  font-size: 1rem;
+}
+.auth .predict {
+  justify-self: start;
+  margin-top: 0.25rem;
+}
+.auth__error {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-left: 4px solid var(--band-very-poor);
+  background: var(--paper);
+  color: #a82828;
+  border-radius: 0.3rem;
+}
+.visitor-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--dusk);
+  border-radius: 0.3rem;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.visitor-notice p {
+  margin: 0;
+}
+.visitor-notice__close {
+  flex: none;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+}
+.visitor-notice__close:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+@media (max-width: 720px) {
+  .visitor-notice {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .frame--menu {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side-nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1rem 1.25rem 0;
+    padding: 0 0 0.75rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header__inner {
+    flex-wrap: wrap;
+  }
+  .wordmark {
+    font-size: 1.8rem;
+  }
+}
+
+/* ---------- saved forecasts ---------- */
+.save {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 28rem;
+  margin: 1.5rem 0;
+}
+.save .predict {
+  justify-self: start;
+}
+.save--hint,
+.save--done {
+  display: block;
+  max-width: none;
+  color: var(--ink-soft);
+}
+.save--done {
+  color: var(--ink);
+}
+.saved {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.saved__item {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--paper);
+}
+.saved__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  align-items: baseline;
+}
+.saved__head span,
+.saved__meta,
+.saved__note {
+  color: var(--ink-soft);
+}
+.saved__reading,
+.saved__meta,
+.saved__note {
+  margin: 0.35rem 0 0;
+}
+.saved__value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+.saved__actions,
+.saved__edit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.75rem;
+}
+.saved__edit .field {
+  flex: 1 1 16rem;
+}
+.saved__danger {
+  color: #a82828;
+}
+.saved__message {
+  margin: 0 0 1rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- send yourself a copy (email or SMS demo) ---------- */
+.send {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 34rem;
+  margin: 0.75rem 0 1.5rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--dusk);
+  border-radius: 0.4rem;
+  background: var(--paper);
+}
+.saved__item .send {
+  margin: 0.9rem 0 0;
+  max-width: none;
+}
+.send__title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+.send__choices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+.send__choice {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--ink-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+}
+.send__choice:hover:not(:disabled),
+.send__choice[aria-expanded="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.send__choice:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.send__sms {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 22rem;
+}
+.send__sms .predict {
+  justify-self: start;
+}
+.send__ok {
+  margin: 0;
+  color: var(--ink);
+}
+.send__ok p {
+  margin: 0 0 0.4rem;
+}
+.send__sms-text {
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.3rem;
+  background: var(--haze);
+  font-variant-numeric: tabular-nums;
+}
+
+/* paste this at the very bottom of globals.css */
+.send__remind {
+  display: grid;
+  gap: 0.5rem;
+}
+.send__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.send__time {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-soft);
+}
+.send__time select {
+  font: inherit;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+.send__help {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.send__sms-text {
+  white-space: pre-wrap;
+}

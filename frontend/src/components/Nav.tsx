@@ -4,10 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV } from "@/lib/nav";
 
+// The page menu, down the left side. Everyone sees it.
 export default function Nav() {
   const pathname = usePathname();
   return (
-    <nav className="site-nav" aria-label="Main">
+    <nav className="side-nav" aria-label="Main">
       {NAV.map((item) => (
         <Link
           key={item.href}

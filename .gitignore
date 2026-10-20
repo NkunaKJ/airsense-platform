@@ -7,3 +7,4 @@ __pycache__/
 node_modules/
 .next/
 Thumbs.db
+backend/models_backup_*/
