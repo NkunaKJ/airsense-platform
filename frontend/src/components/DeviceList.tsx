@@ -1,4 +1,4 @@
-import { bandFor, clockTime, timeAgo, type Device } from "@/lib/api";
+import { bandFor, exactSast, timeAgo, type Device } from "@/lib/api";
 
 const STALE_MINUTES = 30;
 
@@ -38,7 +38,7 @@ export default function DeviceList({ devices, now }: { devices: Device[]; now: n
                 </dl>
                 <p className="device__when">
                   {stale ? "No new data for a while. Last reading " : "Last reading "}
-                  {timeAgo(d.reading_time, now)} ({clockTime(d.reading_time)})
+                  {timeAgo(d.reading_time, now)}: {exactSast(d.reading_time)} SAST
                 </p>
               </>
             )}

@@ -404,3 +404,26 @@ export function manualFromLive(p: PredictionResult): ManualValues {
 export function todayIso(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Johannesburg" });
 }
+
+
+/* ---------- Sensors: exact South African time ---------- */
+
+// "Tue, 20 Oct 2026, 16:31:42" in South African time.
+export function exactSast(isoOrMs: string | number): string {
+  const d = new Date(isoOrMs);
+  const day = d.toLocaleDateString("en-ZA", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Africa/Johannesburg",
+  });
+  const time = d.toLocaleTimeString("en-ZA", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "Africa/Johannesburg",
+  });
+  return `${day}, ${time}`;
+}

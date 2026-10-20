@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import DeviceList from "@/components/DeviceList";
+import SaClock from "@/components/SaClock";
 import SensorChart from "@/components/SensorChart";
 import { getDevices, getSensorHistory, type Device, type SensorHistory } from "@/lib/api";
 
@@ -68,6 +69,7 @@ export default function SensorsPage() {
         <>
           <section className="section section--tight" aria-labelledby="dev-title">
             <h2 id="dev-title">Devices right now</h2>
+            <SaClock />
             <DeviceList devices={devices} now={now} />
             <p className="section__fine">This page checks for new readings every minute.</p>
           </section>
@@ -88,7 +90,7 @@ export default function SensorsPage() {
             )}
             <p className="section__fine">
               Dashed lines are simulated devices. A sensor on one street can read very differently from
-              the regional estimate (a grid of about 40 km) that the forecast learns from.
+              the regional estimate (a grid of about 45 km) that the forecast learns from.
             </p>
           </section>
 
