@@ -15,13 +15,14 @@ const RANGES = [
 type Result = { key: string; data?: History; error?: string };
 
 export default function TrendsPage() {
-  const [city, setCity] = useState<string>(CITIES[0].key);
+  const [city, setCity] = useState<string>("");
   const [days, setDays] = useState<number>(90);
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<Result | null>(null);
   const key = `${city}|${days}|${attempt}`;
 
   useEffect(() => {
+    if (!city) return;
     let cancelled = false;
     getHistory(city, days)
       .then((data) => !cancelled && setResult({ key, data }))
@@ -31,9 +32,9 @@ export default function TrendsPage() {
     };
   }, [city, days, key]);
 
-  const loading = !result || result.key !== key;
-  const data = !loading ? result?.data : undefined;
-  const error = !loading ? result?.error : undefined;
+  const loading = city !== "" && (!result || result.key !== key);
+  const data = city && !loading ? result?.data : undefined;
+  const error = city && !loading ? result?.error : undefined;
 
   const pts = data?.points ?? [];
   const avg = pts.length ? pts.reduce((s, p) => s + p.pm2_5, 0) / pts.length : 0;
@@ -48,17 +49,25 @@ export default function TrendsPage() {
     <>
       <h1 className="forecast__title">Trends</h1>
       <p className="section__lead">
-        How PM2.5 has moved day by day. The dashed lines show where Good, Moderate,
-        Poor and Very poor ranges.
+        How PM2.5 has moved day by day. The dashed lines show where the Good, Moderate and Poor
+        ranges end.
       </p>
 
-      <div className="city-picker trends__pickers" role="group" aria-label="Choose a city">
-        {CITIES.map((c) => (
-          <button key={c.key} aria-pressed={city === c.key} onClick={() => setCity(c.key)}>
-            {c.name}
-          </button>
-        ))}
-      </div>
+      <label className="city-select">
+        <span className="city-select__label">First, choose a city</span>
+        <select value={city} onChange={(e) => setCity(e.target.value)}>
+          <option value="" disabled>
+            Choose a city&hellip;
+          </option>
+          {CITIES.map((c) => (
+            <option key={c.key} value={c.key}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <p className="city-select__label trends__range-label">Then choose how far back to look</p>
       <div className="city-picker" role="group" aria-label="Choose how far back to look">
         {RANGES.map((r) => (
           <button key={r.days} aria-pressed={days === r.days} onClick={() => setDays(r.days)}>
@@ -67,6 +76,7 @@ export default function TrendsPage() {
         ))}
       </div>
 
+      {!city && <p className="loading">Choose a city to see how its PM2.5 has moved.</p>}
       {loading && <p className="loading">Loading the history&hellip;</p>}
 
       {error && (
@@ -116,7 +126,7 @@ export default function TrendsPage() {
           </ul>
           <p className="section__fine">
             The latest day stored is {fullDate(pts[pts.length - 1].date)}. Values are regional model
-            estimates on a grid of about 40 km, not readings from a station in the city.
+            estimates on a grid of about 45 km, not readings from a station in the city.
           </p>
         </section>
       )}

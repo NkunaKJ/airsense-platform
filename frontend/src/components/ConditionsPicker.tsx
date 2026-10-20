@@ -9,7 +9,8 @@ const MODES: { key: Mode; name: string; hint: string }[] = [
 ];
 
 type Props = {
-  mode: Mode;
+  mode: Mode | null;
+  hasCity: boolean;
   onMode: (m: Mode) => void;
   range: DatasetRange | null;
   rangeFailed: boolean;
@@ -26,11 +27,11 @@ type Props = {
 };
 
 export default function ConditionsPicker(p: Props) {
-  const canPredict = !p.busy && (p.mode !== "day" || p.dateOk);
+  const canPredict = !p.busy && p.hasCity && p.mode !== null && (p.mode !== "day" || p.dateOk);
 
   return (
     <fieldset className="inputs">
-      <legend className="inputs__legend">How should we get today&rsquo;s conditions?</legend>
+      <legend className="inputs__legend">Then choose how to get today&rsquo;s conditions</legend>
 
       <div className="modes">
         {MODES.map((m) => (
@@ -47,6 +48,7 @@ export default function ConditionsPicker(p: Props) {
         ))}
       </div>
 
+      {p.mode !== null && (
       <div className="inputs__panel">
         {p.mode === "today" && (
           <p>
@@ -133,6 +135,7 @@ export default function ConditionsPicker(p: Props) {
           </>
         )}
       </div>
+      )}
 
       <button type="button" className="predict" onClick={p.onPredict} disabled={!canPredict}>
         {p.busy ? "Predicting…" : "Predict"}

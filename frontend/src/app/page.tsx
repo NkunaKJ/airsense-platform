@@ -41,8 +41,8 @@ function rangeText(value: number, error: number): string {
 }
 
 export default function PredictionPage() {
-  const [city, setCity] = useState<string>(CITIES[0].key);
-  const [mode, setMode] = useState<Mode>("today");
+  const [city, setCity] = useState<string>("");
+  const [mode, setMode] = useState<Mode | null>(null);
   const [pickedDate, setPickedDate] = useState<string | null>(null);
   const [manual, setManual] = useState<ManualValues>({});
   const [rangeState, setRangeState] = useState<RangeState | null>(null);
@@ -50,16 +50,10 @@ export default function PredictionPage() {
   const [fillError, setFillError] = useState<string | null>(null);
 
   const nextId = useRef(2);
-  const [request, setRequest] = useState<Request | null>({
-    id: 1,
-    city: CITIES[0].key,
-    mode: "today",
-    date: "",
-    manual: {},
-  });
+  const [request, setRequest] = useState<Request | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
 
-  // Run the current request. Today's data loads by itself; the other two wait for the Predict button.
+  // Run the current request. Nothing runs until the Predict button is pressed.
   useEffect(() => {
     if (!request) return;
     let cancelled = false;
@@ -79,7 +73,7 @@ export default function PredictionPage() {
 
   // The list of recorded days (and usual values) for the city, needed by the other two options.
   useEffect(() => {
-    if (mode === "today") return;
+    if (!city || !mode || mode === "today") return;
     let cancelled = false;
     getRange(city)
       .then((data) => !cancelled && setRangeState({ city, data }))
@@ -107,22 +101,23 @@ export default function PredictionPage() {
     setCity(key);
     setPickedDate(null);
     setFillError(null);
-    // Today's data refreshes straight away, as before. The others wait for the Predict button.
-    ask(mode === "today" ? { city: key, mode: "today", date: "", manual: {} } : null);
+    ask(null); // a new city clears the old forecast; the Predict button starts the next one
   }
 
   function chooseMode(next: Mode) {
     setMode(next);
     setFillError(null);
     if (next === "manual" && !manual.date) setManual((m) => ({ ...m, date: todayIso() }));
-    ask(next === "today" ? { city, mode: "today", date: "", manual: {} } : null);
+    ask(null);
   }
 
   function predict() {
+    if (!city || !mode) return;
     ask({ city, mode, date, manual });
   }
 
   function fillFromToday() {
+    if (!city) return;
     setFilling(true);
     setFillError(null);
     getLive(city)
@@ -135,16 +130,23 @@ export default function PredictionPage() {
 
   return (
     <>
-      <div className="city-picker" role="group" aria-label="Choose a city">
-        {CITIES.map((c) => (
-          <button key={c.key} aria-pressed={city === c.key} onClick={() => chooseCity(c.key)}>
-            {c.name}
-          </button>
-        ))}
-      </div>
+      <label className="city-select">
+        <span className="city-select__label">First, choose a city</span>
+        <select value={city} onChange={(e) => chooseCity(e.target.value)}>
+          <option value="" disabled>
+            Choose a city&hellip;
+          </option>
+          {CITIES.map((c) => (
+            <option key={c.key} value={c.key}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+      </label>
 
       <ConditionsPicker
         mode={mode}
+        hasCity={city !== ""}
         onMode={chooseMode}
         range={range}
         rangeFailed={rangeFailed}
@@ -160,7 +162,9 @@ export default function PredictionPage() {
         onPredict={predict}
       />
 
-      {!request && <p className="loading">Choose your options above, then press Predict.</p>}
+      {!request && (
+        <p className="loading">Choose a city, choose how to get today&rsquo;s conditions, then press Predict.</p>
+      )}
       {loading && <p className="loading">Getting the forecast&hellip;</p>}
 
       {error && (
