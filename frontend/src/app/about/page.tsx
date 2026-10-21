@@ -129,6 +129,11 @@ export default function AboutPage() {
             </li>
           )}
           <li>
+            <strong>The history is a saved snapshot.</strong> The Trends and Analysis pages use a dataset that runs
+            to 16 October 2026, so the most recent days are not in it. The Prediction page fetches live values
+            when you choose today&rsquo;s data.
+          </li>
+          <li>
             <strong>Today is partly forecast.</strong> Today&rsquo;s daily average mixes hours already measured with
             the model&rsquo;s forecast for the rest of today.
           </li>

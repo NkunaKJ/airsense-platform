@@ -94,6 +94,10 @@ export default function TrendsPage() {
             {data.city}, {fullDate(pts[0].date)} to {fullDate(pts[pts.length - 1].date)}
           </h2>
           <TrendChart points={pts} longRange={days > 120} />
+          <p className="section__fine">
+            This history runs to {fullDate(pts[pts.length - 1].date)}. It is a saved dataset, so the most recent days
+            are not in it. For today&rsquo;s conditions, use the Prediction page.
+          </p>
 
           <dl className="stats">
             <div>
